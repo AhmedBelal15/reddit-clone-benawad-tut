@@ -14,7 +14,7 @@ export class PostResolver {
     @Arg("id", () => Int) id: number,
     @Ctx() { em }: MyContext
   ): Promise<Post | null> {
-    return em.findOne(Post, { _id: id });
+    return em.findOne(Post, { id });
   }
 
   @Mutation(() => Post)
@@ -34,7 +34,7 @@ export class PostResolver {
     @Arg("title", () => String) title: string,
     @Ctx() { em }: MyContext
   ): Promise<Post | null> {
-    const post = await em.findOne(Post, { _id: id });
+    const post = await em.findOne(Post, { id });
     if (!post) {
       return null;
     }
@@ -51,7 +51,7 @@ export class PostResolver {
     @Ctx() { em }: MyContext
   ): Promise<boolean> {
     try {
-      const res = await em.nativeDelete(Post, { _id: id });
+      const res = await em.nativeDelete(Post, { id });
       if (res === 0) {
         throw new Error("No post found with the id of " + id);
       }
